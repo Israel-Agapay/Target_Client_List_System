@@ -115,15 +115,22 @@ router.put('/:id', async (req, res) => {
   } = req.body;
 
   try {
-  console.log("UPDATE DATE:", date_of_registration);
-  console.log("BIRTH DATE:", date_of_birth);
+    // Kunin ang year mula sa date_of_registration
+    const updatedYear = date_of_registration 
+      ? new Date(date_of_registration).getFullYear() 
+      : null;
+
+    console.log("UPDATE DATE:", date_of_registration);
+    console.log("BIRTH DATE:", date_of_birth);
+    console.log("UPDATED YEAR:", updatedYear);
+
     await db.query(
       `UPDATE clients SET
         date_of_registration=?, family_serial_no=?, last_name=?, first_name=?, middle_initial=?,
-        complete_address=?, age=?, date_of_birth=?, se_status=?, type_of_client=?, source=?, previous_method=?
+        complete_address=?, age=?, date_of_birth=?, se_status=?, type_of_client=?, source=?, previous_method=?, year=?
        WHERE id=?`,
       [date_of_registration, family_serial_no, last_name, first_name, middle_initial,
-       complete_address, age, date_of_birth, se_status, type_of_client, source, previous_method, id]
+       complete_address, age, date_of_birth, se_status, type_of_client, source, previous_method, updatedYear, id]
     );
     res.json({ message: 'Client updated successfully' });
   } catch (err) {
