@@ -195,8 +195,8 @@ const handleSubmit = async () => {
     setConfirmOpen(true);
   };
 
-  const inputClass = "w-full bg-gray-700 text-white px-3 py-1.5 rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-sm";
-  const selectClass = "w-full bg-gray-700 text-white px-3 py-1.5 rounded border border-gray-600 focus:outline-none focus:border-blue-500 text-sm";
+  const inputClass = "w-full bg-gray-700/80 text-white px-3 py-1.5 rounded border border-gray-600 focus:outline-none focus:border-indigo-500 text-sm";
+  const selectClass = "w-full bg-gray-700/80 text-white px-3 py-1.5 rounded border border-gray-600 focus:outline-none focus:border-indigo-500 text-sm";
 
   const filteredClients = clients.filter((client) => {
   const fullName = `${client.first_name} ${client.middle_initial} ${client.last_name}`.toLowerCase();
@@ -221,7 +221,12 @@ const handleSubmit = async () => {
         }
       }}
       disabled={clients.length === 0}
-      className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-base transition disabled:opacity-50 whitespace-nowrap"
+      className="text-white px-3 py-1.5 rounded-lg text-base transition disabled:opacity-50 whitespace-nowrap"
+      style={{
+        background: 'rgba(16,185,129,0.28)',
+        border: '1px solid rgba(16,185,129,0.35)',
+        color: '#6ee7b7',
+      }}
     >
       Export Excel
     </button>
@@ -229,65 +234,85 @@ const handleSubmit = async () => {
   </div>
 
   {/* Right: Search + Year + Add Client */}
-  <div className="flex flex-wrap items-center gap-2">
-    <div className="relative">
+  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+    <div className="relative w-full sm:w-auto">
       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">🔍︎</span>
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search name or address..."
-        className="bg-gray-700 text-white pr-10 pl-3 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-blue-500 text-base w-48"
+        className="bg-gray-700 text-white pr-10 pl-3 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 text-base w-full sm:w-48"
       />
     </div>
-    <label className="text-gray-400 text-base whitespace-nowrap">Year:</label>
-    <select
-      value={year}
-      onChange={(e) => {
-        const selectedYear = Number(e.target.value);
-        onYearChange(selectedYear);
-        showToast(
-          selectedYear === 0 ? 'Year changed to All' : `Year changed to ${selectedYear}`,
-          'success'
-        );
-      }}
-      className="bg-gray-700 text-white px-2 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-blue-500 text-base">
-      <option value={0}>All</option>
-      {[ 
-        new Date().getFullYear() - 10,
-        new Date().getFullYear() - 9,
-        new Date().getFullYear() - 8,
-        new Date().getFullYear() - 7,
-        new Date().getFullYear() - 6,
-        new Date().getFullYear() - 5,
-        new Date().getFullYear() - 4,
-        new Date().getFullYear() - 3,
-        new Date().getFullYear() - 2,
-        new Date().getFullYear() - 1, 
-        
-        new Date().getFullYear(), 
-        
-        new Date().getFullYear() + 1, 
-        new Date().getFullYear() + 2]
-        .map(y => (
-        <option key={y} value={y}>{y}</option>
-      ))}
-    </select>
-    <button
-      onClick={() => { setShowForm(!showForm); setForm(emptyForm); setEditId(null); }}
-      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-base transition whitespace-nowrap"
-    >
-      {showForm ? 'Cancel' : '+ Add Client'}
-    </button>
+    <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
+      <label className="text-gray-400 text-base whitespace-nowrap">Year:</label>
+      <select
+        value={year}
+        onChange={(e) => {
+          const selectedYear = Number(e.target.value);
+          onYearChange(selectedYear);
+          showToast(
+            selectedYear === 0 ? 'Year changed to All' : `Year changed to ${selectedYear}`,
+            'success'
+          );
+        }}
+        className="bg-gray-700 text-white px-2 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 text-base">
+        <option value={0}>All</option>
+        {[ 
+          new Date().getFullYear() - 10,
+          new Date().getFullYear() - 9,
+          new Date().getFullYear() - 8,
+          new Date().getFullYear() - 7,
+          new Date().getFullYear() - 6,
+          new Date().getFullYear() - 5,
+          new Date().getFullYear() - 4,
+          new Date().getFullYear() - 3,
+          new Date().getFullYear() - 2,
+          new Date().getFullYear() - 1, 
+          
+          new Date().getFullYear(), 
+          
+          new Date().getFullYear() + 1, 
+          new Date().getFullYear() + 2]
+          .map(y => (
+          <option key={y} value={y}>{y}</option>
+        ))}
+      </select>
+      <button
+        onClick={() => { setShowForm(!showForm); setForm(emptyForm); setEditId(null); }}
+        className="text-white px-3 py-1.5 rounded-lg text-base transition whitespace-nowrap"
+        style={{
+          background: showForm ? 'rgba(255,255,255,0.07)' : 'rgba(0,122,255,0.55)',
+          border: showForm ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(99,102,241,0.54)',
+          color: showForm ? 'rgba(255,255,255,0.6)' : '#FFFF',
+        }}
+      >
+        {showForm ? 'Cancel' : '+ Add Client'}
+      </button>
+    </div>
   </div>
 </div>
     
 
       {/* Form */}
         {showForm && (
-          <div  ref={formRef}
-            className="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-6">
-          <h3 className="text-white font-semibold mb-4">{editId ? 'Edit Client' : 'Add New Client'}</h3>
+          <div ref={formRef}
+            className="rounded-xl p-6 mb-6"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
+            }}
+          >
+          <h3 className="text-white font-semibold mb-4 text-base flex items-center gap-2">
+            <span style={{
+              width: '4px', height: '18px', borderRadius: '2px',
+              background: 'linear-gradient(to bottom, #6366f1, #10b981)',
+              display: 'inline-block', flexShrink: 0,
+            }} />
+            {editId ? 'Edit Client' : 'Add New Client'}
+          </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div>
               <label className="text-gray-400 text-base mb-1 block">Date of Registration</label>
@@ -367,7 +392,13 @@ const handleSubmit = async () => {
           </div>
           <div className="mt-4 flex gap-2">
             <button onClick={handleSubmit} disabled={loading}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg text-base transition disabled:opacity-50">
+              className="text-white px-6 py-2 rounded-lg text-base transition disabled:opacity-50"
+              style={{
+                background: 'rgba(16,185,129,0.45)',
+                border: '1px solid rgba(16,185,129,4.55)',
+                color: '#FFFF',
+              }}
+            >
               {loading ? 'Saving...' : editId ? 'Update Client' : 'Save Client'}
             </button>
             <button onClick={() => { setShowForm(false); setForm(emptyForm); setEditId(null); }}
@@ -379,22 +410,22 @@ const handleSubmit = async () => {
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-gray-700">
+      <div className="overflow-x-auto rounded-xl" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
         <table className="w-full text-base">
-          <thead className="bg-gray-800 text-gray-400">
-            <tr>
-              <th className="px-3 py-3 text-left">No.</th>
-              <th className="px-3 py-3 text-left">Date Registered</th>
-              <th className="px-3 py-3 text-left">Serial No.</th>
-              <th className="px-3 py-3 text-left">Full Name</th>
-              <th className="px-3 py-3 text-left">Address</th>
-              <th className="px-3 py-3 text-left">Age</th>
-              <th className="px-3 py-3 text-left">Birthday</th>
-              <th className="px-3 py-3 text-left">SE Status</th>
-              <th className="px-3 py-3 text-left">Type</th>
-              <th className="px-3 py-3 text-left">Source</th>
-              <th className="px-3 py-3 text-left">Prev. Method</th>
-              <th className="px-3 py-3 text-left">Actions</th>
+          <thead>
+            <tr style={{ background: 'rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+              <th className="px-3 py-3 text-left text-white font-semibold">No.</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Date Registered</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Serial No.</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Full Name</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Address</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Age</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Birthday</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">SE Status</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Type</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Source</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Prev. Method</th>
+              <th className="px-3 py-3 text-left text-white font-semibold">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -405,28 +436,65 @@ const handleSubmit = async () => {
             ) : (
               filteredClients.map((client, index) => (
                 <tr key={client.id} 
-                    className="border-t border-gray-700 hover:bg-gray-750 transition cursor-pointer"
+                    className="transition cursor-pointer"
+                    style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                    onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     onClick={() => { setViewClient(client); setViewOpen(true); }}>
-                  <td className="px-3 py-3 text-gray-300">{index + 1}</td>
+                  <td className="px-3 py-3 text-gray-400">{index + 1}</td>
                   <td className="px-3 py-3 text-gray-300">{formatDisplayDate(client.date_of_registration)}</td>
                   <td className="px-3 py-3 text-gray-300">{client.family_serial_no}</td>
                   <td className="px-3 py-3 text-white font-medium">{client.last_name}, {client.first_name} {client.middle_initial}.</td>
                   <td className="px-3 py-3 text-gray-300">{client.complete_address}</td>
                   <td className="px-3 py-3 text-gray-300">{client.age}</td>
                   <td className="px-3 py-3 text-gray-300">{formatDisplayDate(client.date_of_birth)}</td>
-                  <td className="px-3 py-3 text-gray-300">{client.se_status === 1 ? 'NHTS' : 'Non-NHTS'}</td>
+                  <td className="px-3 py-3">
+                    <span
+                      className="px-2 py-0.5 rounded-full text-sm font-semibold"
+                      style={
+                        client.se_status === 1
+                          ? { background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.25)', color: '#6ee7b7' }
+                          : { background: 'rgba(99,102,241,0.13)', border: '1px solid rgba(99,102,241,0.22)', color: '#a5b4fc' }
+                      }
+                    >
+                      {client.se_status === 1 ? 'NHTS' : 'Non-NHTS'}
+                    </span>
+                  </td>
                   <td className="px-3 py-3 text-gray-300">{client.type_of_client}</td>
-                  <td className="px-3 py-3 text-gray-300">{client.source}</td>
+                  <td className="px-3 py-3">
+                    <span
+                      className="px-2 py-0.5 rounded-full text-sm font-semibold"
+                      style={
+                        client.source === 'Public'
+                          ? { background: 'rgba(59,130,246,0.13)', border: '1px solid rgba(59,130,246,0.22)', color: '#93c5fd' }
+                          : { background: 'rgba(245,158,11,0.13)', border: '1px solid rgba(245,158,11,0.22)', color: '#fcd34d' }
+                      }
+                    >
+                      {client.source}
+                    </span>
+                  </td>
                   <td className="px-3 py-3 text-gray-300">{client.previous_method}</td>
                   <td className="px-3 py-3">
                     <div className="flex gap-2">
                       <button onClick={(e) => { e.stopPropagation(); handleEdit(client); }}
-                        className="bg-yellow-600 hover:bg-yellow-700 text-white px-2 py-1 rounded text-base transition">
+                        className="text-white px-2 py-1 rounded text-base transition"
+                        style={{
+                          background: 'rgba(234,179,8,0.15)',
+                          border: '1px solid rgba(234,179,8,0.3)',
+                          color: '#fde68a',
+                        }}
+                      >
                         Edit
                       </button>
                       
                       <button onClick={(e) => { e.stopPropagation(); confirmDelete(client.id, `${client.first_name} ${client.last_name}`); }}
-                        className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-base transition">
+                        className="text-white px-2 py-1 rounded text-base transition"
+                        style={{
+                          background: 'rgba(239,68,68,0.13)',
+                          border: '1px solid rgba(239,68,68,0.25)',
+                          color: '#fca5a5',
+                        }}
+                      >
                         Delete
                       </button>
                     </div>
