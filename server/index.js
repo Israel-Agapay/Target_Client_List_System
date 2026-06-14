@@ -7,7 +7,10 @@ const clientRoutes = require('./routes/clients');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://target-client-list-system.vercel.app', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
