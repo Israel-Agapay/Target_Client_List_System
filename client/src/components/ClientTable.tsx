@@ -209,88 +209,88 @@ const handleSubmit = async () => {
     <div>
       {/* Add Button */}
      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-  {/* Left: Export + Records count */}
-  <div className="flex items-center gap-2">
-    <button
-      onClick={async () => {
-        try {
-          await exportToExcel(clients, method, year);
-          showToast('Excel file download successfully!', 'success');
-        } catch (error) {
-          showToast('Failed to download Excel file!', 'error');
-        }
-      }}
-      disabled={clients.length === 0}
-      className="text-white px-3 py-1.5 rounded-lg text-base transition disabled:opacity-50 whitespace-nowrap"
-      style={{
-        background: 'rgba(16,185,129,0.28)',
-        border: '1px solid rgba(16,185,129,0.35)',
-        color: '#6ee7b7',
-      }}
-    >
-      Export Excel
-    </button>
-    <p className="text-gray-400 text-base whitespace-nowrap">{filteredClients.length} record(s) found</p>
-  </div>
-
-  {/* Right: Search + Year + Add Client */}
-  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-    <div className="relative w-full sm:w-auto">
-      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">🔍︎</span>
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search name or address..."
-        className="bg-gray-700 text-white pr-10 pl-3 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 text-base w-full sm:w-48"
-      />
-    </div>
-    <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
-      <label className="text-gray-400 text-base whitespace-nowrap">Year:</label>
-      <select
-        value={year}
-        onChange={(e) => {
-          const selectedYear = Number(e.target.value);
-          onYearChange(selectedYear);
-          showToast(
-            selectedYear === 0 ? 'Year changed to All' : `Year changed to ${selectedYear}`,
-            'success'
-          );
-        }}
-        className="bg-gray-700 text-white px-2 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 text-base">
-        <option value={0}>All</option>
-        {[ 
-          new Date().getFullYear() - 10,
-          new Date().getFullYear() - 9,
-          new Date().getFullYear() - 8,
-          new Date().getFullYear() - 7,
-          new Date().getFullYear() - 6,
-          new Date().getFullYear() - 5,
-          new Date().getFullYear() - 4,
-          new Date().getFullYear() - 3,
-          new Date().getFullYear() - 2,
-          new Date().getFullYear() - 1, 
-          
-          new Date().getFullYear(), 
-          
-          new Date().getFullYear() + 1, 
-          new Date().getFullYear() + 2]
-          .map(y => (
-          <option key={y} value={y}>{y}</option>
-        ))}
-      </select>
+    {/* Left: Export + Records count */}
+    <div className="flex items-center gap-2">
       <button
-        onClick={() => { setShowForm(!showForm); setForm(emptyForm); setEditId(null); }}
-        className="text-white px-3 py-1.5 rounded-lg text-base transition whitespace-nowrap"
+        onClick={async () => {
+          try {
+            await exportToExcel(clients, method, year);
+            showToast('Excel file download successfully!', 'success');
+          } catch (error) {
+            showToast('Failed to download Excel file!', 'error');
+          }
+        }}
+        disabled={clients.length === 0}
+        className="text-white px-3 py-1.5 rounded-lg text-base transition disabled:opacity-50 whitespace-nowrap"
         style={{
-          background: showForm ? 'rgba(255,255,255,0.07)' : 'rgba(0,122,255,0.55)',
-          border: showForm ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(99,102,241,0.54)',
-          color: showForm ? 'rgba(255,255,255,0.6)' : '#FFFF',
+          background: 'rgba(16,185,129,0.28)',
+          border: '1px solid rgba(16,185,129,0.35)',
+          color: '#6ee7b7',
         }}
       >
-        {showForm ? 'Cancel' : '+ Add Client'}
+        Export Excel
       </button>
+      <p className="text-gray-400 text-sm sm:text-base whitespace-nowrap">{filteredClients.length} record(s) found</p>
     </div>
+
+    {/* Right: Search + Year + Add Client */}
+    <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+      <div className="relative w-full sm:w-auto">
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">🔍︎</span>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search name or address..."
+          className="bg-gray-700 text-white pr-10 pl-3 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 text-base w-full sm:w-48"
+        />
+      </div>
+      <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
+        <label className="text-gray-400 text-sm sm:text-base whitespace-nowrap">Year:</label>
+        <select
+          value={year}
+          onChange={(e) => {
+            const selectedYear = Number(e.target.value);
+            onYearChange(selectedYear);
+            showToast(
+              selectedYear === 0 ? 'Year changed to All' : `Year changed to ${selectedYear}`,
+              'success'
+            );
+          }}
+          className="bg-gray-700 text-white px-2 py-1.5 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 text-base">
+          <option value={0}>All</option>
+          {[ 
+            new Date().getFullYear() - 10,
+            new Date().getFullYear() - 9,
+            new Date().getFullYear() - 8,
+            new Date().getFullYear() - 7,
+            new Date().getFullYear() - 6,
+            new Date().getFullYear() - 5,
+            new Date().getFullYear() - 4,
+            new Date().getFullYear() - 3,
+            new Date().getFullYear() - 2,
+            new Date().getFullYear() - 1, 
+            
+            new Date().getFullYear(), 
+            
+            new Date().getFullYear() + 1, 
+            new Date().getFullYear() + 2]
+            .map(y => (
+            <option key={y} value={y}>{y}</option>
+          ))}
+        </select>
+        <button
+          onClick={() => { setShowForm(!showForm); setForm(emptyForm); setEditId(null); }}
+          className="text-white px-3 py-1.5 rounded-lg text-base transition whitespace-nowrap"
+          style={{
+            background: showForm ? 'rgba(255,255,255,0.07)' : 'rgba(0,122,255,0.55)',
+            border: showForm ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(99,102,241,0.54)',
+            color: showForm ? 'rgba(255,255,255,0.6)' : '#FFFF',
+          }}
+        >
+          {showForm ? 'Cancel' : '+ Add Client'}
+        </button>
+      </div>
   </div>
 </div>
     
@@ -410,7 +410,7 @@ const handleSubmit = async () => {
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="overflow-x-auto rounded-xl" style={{ border: '1px solid rgba(255,255,255,0.20)' }}>
         <table className="w-full text-base">
           <thead>
             <tr style={{ background: 'rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>

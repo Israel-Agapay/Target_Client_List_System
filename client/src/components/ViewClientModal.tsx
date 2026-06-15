@@ -65,7 +65,7 @@ const ViewClientModal = ({isOpen,client,onClose,onEdit,onDelete}: Props) => {
         }}
       >
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="flex justify-between items-center px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
           <div>
             <h3 className="text-white font-semibold text-lg flex items-center gap-2">
               <span style={{
@@ -89,7 +89,7 @@ const ViewClientModal = ({isOpen,client,onClose,onEdit,onDelete}: Props) => {
         </div>
 
         {/* Avatar + Name */}
-        <div className="px-6 py-4 flex items-center gap-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="px-4 py-3 flex items-center gap-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0"
             style={{
@@ -107,7 +107,7 @@ const ViewClientModal = ({isOpen,client,onClose,onEdit,onDelete}: Props) => {
         </div>
 
         {/* Fields */}
-        <div className="px-6 py-4 grid grid-cols-2 gap-4 overflow-y-auto flex-1">
+        <div className="px-4 py-4 grid grid-cols-1 min-[480px]:grid-cols-2 gap-3 overflow-y-auto flex-1">
           {fields.map((field) => (
             <div
               key={field.label}
@@ -148,7 +148,7 @@ const ViewClientModal = ({isOpen,client,onClose,onEdit,onDelete}: Props) => {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 flex justify-between items-center" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="px-4 py-3 flex justify-between items-center" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
 
         {/* Mobile Only Actions */}
         <div className="flex gap-2 md:hidden">
