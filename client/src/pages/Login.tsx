@@ -232,7 +232,7 @@ const Login = () => {
 
       {/* Footer */}
       <p className="mt-6 text-xs text-center relative z-10" style={{ color: '#3a4a56' }}>
-        Copyright © 2025 Barangay Mercado. All Rights Reserved.
+        Copyright © 2026 Barangay Mercado. All Rights Reserved.
       </p>
     </div>
   );
