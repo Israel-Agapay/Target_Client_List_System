@@ -230,7 +230,9 @@ const handleSubmit = async () => {
       >
         Export Excel
       </button>
-      <p className="text-gray-400 text-sm sm:text-base whitespace-nowrap">{filteredClients.length} record(s) found</p>
+      <p className="text-gray-400 text-sm sm:text-base">
+        {filteredClients.length} record(s)<br className="sm:hidden" /> found
+      </p>
     </div>
 
     {/* Right: Search + Year + Add Client */}
