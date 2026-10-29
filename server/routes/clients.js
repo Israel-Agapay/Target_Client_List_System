@@ -31,7 +31,9 @@ router.get('/all-years/:method', async (req, res) => {
     const [rows] = await db.query(
       `SELECT *, TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age 
        FROM clients WHERE method = ? 
-       ORDER BY year ASC, MONTH(date_of_registration) ASC, DAY(date_of_registration) ASC`,
+       ORDER BY year ASC, 
+       MONTH(COALESCE(date_of_registration, '9999-12-31')) ASC, 
+       DAY(COALESCE(date_of_registration, '9999-12-31')) ASC`,
       [method]
     );
     res.json(rows);
@@ -53,7 +55,9 @@ router.get('/:method', async (req, res) => {
       params.push(year);
     }
     
-    query += ' ORDER BY year ASC, MONTH(date_of_registration) ASC, DAY(date_of_registration) ASC';
+    query += ` ORDER BY year ASC, 
+      MONTH(COALESCE(date_of_registration, '9999-12-31')) ASC, 
+      DAY(COALESCE(date_of_registration, '9999-12-31')) ASC`;
     const [rows] = await db.query(query, params);
     res.json(rows);
   } catch (err) {
@@ -115,14 +119,9 @@ router.put('/:id', async (req, res) => {
   } = req.body;
 
   try {
-    // Kunin ang year mula sa date_of_registration
     const updatedYear = date_of_registration 
       ? new Date(date_of_registration).getFullYear() 
       : null;
-
-    console.log("UPDATE DATE:", date_of_registration);
-    console.log("BIRTH DATE:", date_of_birth);
-    console.log("UPDATED YEAR:", updatedYear);
 
     await db.query(
       `UPDATE clients SET
@@ -152,7 +151,6 @@ router.get('/client/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
-
 
 // DELETE client
 router.delete('/:id', async (req, res) => {
