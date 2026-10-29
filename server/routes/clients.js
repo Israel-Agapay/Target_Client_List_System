@@ -11,7 +11,7 @@ router.get('/counts/all', async (req, res) => {
     let params = [];
 
     if (year && year !== '0') {
-      query += ' WHERE year = ?';
+      query += ' WHERE YEAR(date_of_registration) = ?';
       params.push(year);
     }
 
@@ -64,7 +64,7 @@ router.get('/:method', async (req, res) => {
     let params = [method];
 
     if (year && year !== '0') {
-      query += ' AND year = ?';
+      query += ' AND YEAR(date_of_registration) = ?';
       params.push(year);
     }
 
